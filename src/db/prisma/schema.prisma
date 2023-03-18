@@ -1,0 +1,47 @@
+generator client {
+  provider        = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id                    Int                 @id @default(autoincrement())
+  name                  String
+  enable                Boolean            
+  @@map(name: "categories")
+}
+
+model Product {
+  id                    Int                 @id @default(autoincrement())
+  name                  String
+  description           String              @db.Text
+  enable                Boolean            
+  @@map(name: "products")
+}
+
+
+model CategoryProduct {
+  id                    Int                 @id @default(autoincrement())
+  product_id            Int
+  category_id           Int         
+  @@map(name: "category_products")
+}
+
+model Image {
+  id                    Int                 @id @default(autoincrement())
+  name                  String
+  file                  String
+  enable                Boolean            
+   
+  @@map(name: "images")
+}
+
+model ProductImage {
+  id                      Int                 @id @default(autoincrement())
+  product_id              Int                
+  image_id                Int       
+  @@map(name: "product_images")
+}
