@@ -4,10 +4,10 @@ import bodyParser from 'body-parser';
 import helmet from 'helmet';
 import cors from 'cors';
 import { config as dotenv } from 'dotenv';
-import { AppV1 } from "./src/routers/v1";
+import { Api } from "./src/routers/v1";
 
-const appV1 = new AppV1()
-appV1.routes()
+const api = new Api()
+api.routes()
 
 class App {
   public app: Application;
@@ -36,7 +36,7 @@ class App {
       });
     });
 
-    this.app.use('/api/v2', appV1.router)
+    this.app.use('/api/v1', api.router)
   }
 }
 

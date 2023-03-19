@@ -10,7 +10,8 @@ datasource db {
 model Category {
   id                    Int                 @id @default(autoincrement())
   name                  String
-  enable                Boolean            
+  enable                Boolean
+  products              CategoryProduct[]
   @@map(name: "categories")
 }
 
@@ -18,7 +19,9 @@ model Product {
   id                    Int                 @id @default(autoincrement())
   name                  String
   description           String              @db.Text
-  enable                Boolean            
+  enable                Boolean
+  categories            CategoryProduct[]                  
+  image                 ProductImage[]
   @@map(name: "products")
 }
 
@@ -27,6 +30,8 @@ model CategoryProduct {
   id                    Int                 @id @default(autoincrement())
   product_id            Int
   category_id           Int         
+  category              Category            @relation(fields: [category_id], references: [id])
+  product               Product             @relation(fields: [product_id], references: [id])
   @@map(name: "category_products")
 }
 
@@ -34,8 +39,8 @@ model Image {
   id                    Int                 @id @default(autoincrement())
   name                  String
   file                  String
-  enable                Boolean            
-   
+  enable                Boolean
+  product               ProductImage[]       
   @@map(name: "images")
 }
 
@@ -43,5 +48,7 @@ model ProductImage {
   id                      Int                 @id @default(autoincrement())
   product_id              Int                
   image_id                Int       
+  product                 Product             @relation(fields: [product_id], references: [id])
+  Image                   Image               @relation(fields: [image_id], references: [id])
   @@map(name: "product_images")
 }

@@ -1,12 +1,14 @@
 import { ProductController } from "../../controllers/ProductController";
+import { ProductServices } from "../../services/ProductServices";
 import BaseRoutes from "../BaseRoutes";
 import {ProductRoutes} from '../v1/productRouters'
 
-const productController = new ProductController();
+const productServices = new ProductServices();
+const productController = new ProductController(productServices);
 const productRoutes = new ProductRoutes(productController);
 productRoutes.routes();
 
-export class AppV1 extends BaseRoutes {
+export class Api extends BaseRoutes {
     constructor() {
         super()
     }

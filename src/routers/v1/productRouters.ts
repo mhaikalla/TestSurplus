@@ -14,7 +14,7 @@ export class ProductRoutes extends BaseRoutes {
     this.router.get('/', this._productController.findAll);
     this.router.get('/:id', this._productController.findProductbyId);
     this.router.put('/:id', this._productController.update);
-    this.router.delete('/:id', this._productController.deleteById);
+    this.router.delete('/:id', this._productController.delete);
     this.router.post('/create', this._productController.create);
   }
 }

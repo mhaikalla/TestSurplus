@@ -1,4 +1,4 @@
-import { Sequelize, Model, DataTypes, ModelAttributes, StringDataTypeConstructor, ModelAttributeColumnOptions } from 'sequelize';
+import { Sequelize, DataTypes, ModelAttributeColumnOptions } from 'sequelize';
 
 require('dotenv').config();
 
@@ -6,7 +6,7 @@ let Db: Sequelize | null
 
 export function getDb(): Sequelize {
     if (!Db) {
-        Db = new Sequelize(process.env.DATABASE_URL_REPLICA_WMS || "", { define: { timestamps: false }})
+        Db = new Sequelize(process.env.DATABASE_URL || "", { define: { timestamps: false }})
     }
     return Db
 }
@@ -43,8 +43,6 @@ export function getDataTypesChaining(type: DataTypes.DataType, attributes?: Mode
             defaultValue
         })
     }
-
-
 
     return {
         asPrimaryKey,

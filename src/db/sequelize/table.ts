@@ -7,7 +7,7 @@ const defaultSetting = {
   underscored: true,
 };
 
-export const CategoryTable = getDb().define<Model<Category>>("category", {
+export const CategoryTable = getDb().define<Model<Category>>("categories", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -18,7 +18,7 @@ export const CategoryTable = getDb().define<Model<Category>>("category", {
   enable:_(DataTypes.BOOLEAN)
 }, defaultSetting)
 
-export const ProductTable = getDb().define<Model<Product>>("product", {
+export const ProductTable = getDb().define<Model<Product>>("products", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -28,14 +28,14 @@ export const ProductTable = getDb().define<Model<Product>>("product", {
   name : _(DataTypes.STRING),
   description : _(DataTypes.STRING),
   enable:_(DataTypes.BOOLEAN)
-}, defaultSetting)
+} as any, defaultSetting)
 
-export const ProductCategoryTable = getDb().define<Model<CategoryProduct>>("CategoryProduct", {
+export const ProductCategoryTable = getDb().define<Model<CategoryProduct>>("category_products", {
   product_id : _(DataTypes.NUMBER),
   category_id : _(DataTypes.NUMBER),
 }, defaultSetting)
 
-export const ImageTable = getDb().define<Model<Image>>("product", {
+export const ImageTable = getDb().define<Model<Image>>("products", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -47,12 +47,13 @@ export const ImageTable = getDb().define<Model<Image>>("product", {
   enable:_(DataTypes.BOOLEAN)
 }, defaultSetting)
 
-export const ProductImageTable = getDb().define<Model<ProductImage>>("product_image", {
+export const ProductImageTable = getDb().define<Model<ProductImage>>("product_images", {
     product_id : _(DataTypes.NUMBER),
     image_id :_(DataTypes.NUMBER)
 }, defaultSetting)
 
 CategoryTable.belongsToMany(ProductTable, { through: ProductCategoryTable });
 ProductTable.belongsToMany(CategoryTable, { through: ProductCategoryTable });
-
+ImageTable.belongsToMany(ProductTable, { through: ProductImageTable });
+ProductTable.belongsToMany(ImageTable, { through: ProductImageTable });
 
